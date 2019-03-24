@@ -11,12 +11,12 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-FROM python:3.6-alpine
+FROM python:3.6-alpine3.9
 
 COPY docker-entrypoint.sh /
 
 RUN    apk --no-cache add --virtual=.build-dep build-base \
-    && apk --no-cache add libzmq \
+    && apk --no-cache add zeromq-dev \
     && pip install --no-cache-dir locustio==0.8.1 \
     && apk del .build-dep \
     && chmod +x /docker-entrypoint.sh
