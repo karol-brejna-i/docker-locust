@@ -110,3 +110,10 @@ docker run --name slave0 `
  -e LOCUST_MASTER=master `
  --rm -d grubykarol/locust:0.8.1-py3.6
 ```
+
+
+# TODO
+
+1. Add info about directory structure for maintaining multiple image versions (different locust, python, os versions)
+2. Make build-all.sh readable
+3. Add info about build (build-all.sh) script
