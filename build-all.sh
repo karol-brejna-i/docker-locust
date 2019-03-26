@@ -15,7 +15,7 @@ function compute_tag() {
 function build_image() {
     path=$(join / $*)
     tag=$(compute_tag $*)
-    docker build -t aaa${tag} $path
+    docker build -t ${tag} $path
 }
 
 
@@ -31,7 +31,7 @@ function process() {
         locust_version=${array[1]}
         python_version=${array[2]}
 
-        if case $locust_version in "$1"*) false;; *) true;; esac; then
+        if case ${locust_version} in "$1"*) false;; *) true;; esac; then
           continue
         fi
 
