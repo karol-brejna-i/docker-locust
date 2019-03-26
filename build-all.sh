@@ -15,7 +15,7 @@ function compute_tag() {
 function build_image() {
     path=$(join / $*)
     tag=$(compute_tag $*)
-    docker build -t aaa${tag} $path
+    docker build -t ${tag} $path
 }
 
 
