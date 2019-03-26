@@ -54,17 +54,25 @@ The tag for this image will be: **grubykarol/locust:0.10.0-python3.6-alpine3.9**
 
  
 # Usage 
-The image does not include locust scripts during build. It assumes, the scripts will be supplied on runtime by mounting a volume (to `/locust` path).
+The image does not include locust scripts during a build. It assumes, the scripts will be supplied on runtime by mounting a volume (to `/locust` path).
 
 This gives the ability to use the exact same image for different deployments. There is no need to build your image that 
 would inherit from this one and only include test scripts (although it's also possible). 
 
 ## Pulling the image
-Choose locust, python and OS (Operating System) you want and pull an image tagged accordingly (see: [Tagging structure](#tagging-structure)):
+Pull the latest stable version:
+
+```
+docker pull grubykarol/locust 
+```
+
+Or choose locust, python and OS (Operating System) version you want and pull and the image that is tagged accordingly (see: [Tagging structure](#tagging-structure)):
 
 ```
 docker pull grubykarol/locust:0.10.0-python3.6-alpine3.9 
 ```
+
+
 
 ## Running the image
 The image uses the following environment variables to configure its behavior:
@@ -83,11 +91,11 @@ The image uses the following environment variables to configure its behavior:
 
 Basic run, with folder (path in $MY_SCRIPTS) holding `locustfile.py`:
 ```
-docker run --rm --name standalone --hostname standalone -e ATTACKED_HOST=http://standalone:8089 -p 8089:8089 -d -v $MY_SCRIPTS:/locust grubykarol/locust:0.10.0-python3.6-alpine3.9
+docker run --rm --name standalone --hostname standalone -e ATTACKED_HOST=http://standalone:8089 -p 8089:8089 -d -v $MY_SCRIPTS:/locust grubykarol/locust
 ```
 or, with additional runtime options:
 ```
-docker run --rm --name standalone --hostname standalone -e ATTACKED_HOST=http://standalone:8089 -e "LOCUST_OPTS=--no-web" -p 8089:8089 -d -v $MY_SCRIPTS:/locust grubykarol/locust:0.10.0-python3.6-alpine3.9
+docker run --rm --name standalone --hostname standalone -e ATTACKED_HOST=http://standalone:8089 -e "LOCUST_OPTS=--no-web" -d -v $MY_SCRIPTS:/locust grubykarol/locust
 ```
 
 ### Master-slave
@@ -97,9 +105,9 @@ Run master:
 docker run --name master --hostname master \
  -p 8089:8089 -p 5557:5557 -p 5558:5558 \
  -v $MY_SCRIPTS:/locust \
- -e ATTACKED_HOST='http://master:8089' \
+ -e ATTACKED_HOST=http://master:8089 \
  -e LOCUST_MODE=master \
- --rm -d grubykarol/locust:0.10.0-python3.6-alpine3.9
+ --rm -d grubykarol/locust
 ```
 
 and some slaves:
@@ -111,7 +119,7 @@ docker run --name slave0 \
  -e ATTACKED_HOST=http://master:8089 \
  -e LOCUST_MODE=slave \
  -e LOCUST_MASTER=master \
- --rm -d grubykarol/locust:0.10.0-python3.6-alpine3.9
+ --rm -d grubykarol/locust
 
 docker run --name slave1 \
  --link master --env NO_PROXY=master \
@@ -119,7 +127,7 @@ docker run --name slave1 \
  -e ATTACKED_HOST=http://master:8089 \
  -e LOCUST_MODE=slave \
  -e LOCUST_MASTER=master \
- --rm -d grubykarol/locust:0.10.0-python3.6-alpine3.9
+ --rm -d grubykarol/locust
 ```
 
 
@@ -131,7 +139,7 @@ docker run --rm --name standalone `
  -e ATTACKED_HOST=http://localhost:8089 `
  -v c:\locust-scripts:/locust `
  -p 8089:8089 -d `
- grubykarol/locust:0.10.0-python3.6-alpine3.9
+ grubykarol/locust
 ```
 
 Run master:
@@ -141,7 +149,7 @@ docker run --name master --hostname master `
  -v c:\locust-scripts:/locust `
  -e ATTACKED_HOST='http://master:8089' `
  -e LOCUST_MODE=master `
- --rm -d grubykarol/locust:0.10.0-python3.6-alpine3.9
+ --rm -d grubykarol/locust
 ```
 
 Run slave:
@@ -152,24 +160,21 @@ docker run --name slave0 `
  -e ATTACKED_HOST=http://master:8089 `
  -e LOCUST_MODE=slave `
  -e LOCUST_MASTER=master `
- --rm -d grubykarol/locust:0.10.0-python3.6-alpine3.9
+ --rm -d grubykarol/locust
 ```
 
 ## Examples
-TODO: run standalone headless
+Other simple examples are collected in [examples](./examples) directory. They include some docker-compose files to run locust standalone and distributed.
+See the folder for details.
 
 # Building the image
+Choose locust, python and OS (Operating System) version you want by going into desired directory (see: [Repository structure](#repository-structure))
 ```
 docker build -t grubykarol/locust:0.10.0-python3.6-alpine3.9 .
 ```
-or (if behind a proxy):
+or, if behind a proxy (and the proxies are defined in HTTP(S)_PROXY variables:
 ```
 docker build --build-arg HTTP_PROXY=$http_proxy --build-arg HTTPS_PROXY=$https_proxy -t grubykarol/locust:0.10.0-python3.6-alpine3.9 . 
 ```
 
-
-# TODO
-
-1. Add info about directory structure for maintaining multiple image versions (different locust, python, os versions)
-2. Make build-all.sh readable
-3. Add info about build (build-all.sh) script
+There is also a simple and messy bash script -- [build-all.sh](build-all.sh) -- for development purposes. It's able to build all the images or images for selected locust version.
