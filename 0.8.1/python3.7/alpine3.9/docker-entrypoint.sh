@@ -1,5 +1,5 @@
 #!/bin/sh
-#   Copyright 2019 Karol Brejna
+#   Copyright 2017 Karol Brejna
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ if [ -z ${ATTACKED_HOST+x} ] ; then
     exit 1
 fi
 
-LOCUST_OPTS="-f ${LOCUST_FILE} --host=${ATTACKED_HOST} $LOCUST_OPTS"
+LOCUST_OPTS="-f ${LOCUST_FILE} --host=${ATTACKED_HOST} --no-reset-stats $LOCUST_OPTS"
 
 case `echo ${LOCUST_MODE} | tr 'a-z' 'A-Z'` in
 "MASTER")
