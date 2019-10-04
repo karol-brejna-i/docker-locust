@@ -1,7 +1,7 @@
 version: '3'
 services:
   standalone:
-    image: "grubykarol/locust:0.9.0-python3.6-alpine3.9"
+    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
     container_name: standalone
     hostname: standalone
     ports:

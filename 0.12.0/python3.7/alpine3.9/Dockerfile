@@ -17,9 +17,7 @@ COPY docker-entrypoint.sh /
 
 RUN    apk --no-cache add --virtual=.build-dep build-base git \
     && apk --no-cache add zeromq-dev \
-    && pip install --no-cache-dir pipenv
-#RUN    pipenv install --no-cache-dir git+https://github.com/locustio/locust.git@0.12.0#egg=locust  \
-RUN    python3 -m pip install --no-cache-dir git+https://github.com/locustio/locust.git@0.12.0#egg=locust  \
+    && python3 -m pip install --no-cache-dir git+https://github.com/locustio/locust.git@0.12.0#egg=locustio  \
     && apk del .build-dep \
     && chmod +x /docker-entrypoint.sh \
     && mkdir /locust

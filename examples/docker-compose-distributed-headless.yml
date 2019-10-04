@@ -3,7 +3,7 @@ services:
   master:
     container_name: master
     hostname: master
-    image: "grubykarol/locust:0.9.0-python3.6-alpine3.9"
+    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
     environment:
       ATTACKED_HOST: http://example.com
       LOCUST_MODE: master
@@ -15,7 +15,7 @@ services:
       - ./locust-scripts:/locust
 
   slave:
-    image: "grubykarol/locust:0.9.0-python3.6-alpine3.9"
+    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
     environment:
       ATTACKED_HOST: http://example.com
       LOCUST_MODE: slave

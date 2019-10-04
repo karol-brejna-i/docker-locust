@@ -15,9 +15,9 @@ FROM python:3.6-alpine3.9
 
 COPY docker-entrypoint.sh /
 
-RUN    apk --no-cache add --virtual=.build-dep build-base \
+RUN    apk --no-cache add --virtual=.build-dep build-base git \
     && apk --no-cache add zeromq-dev \
-    && pip install --no-cache-dir locustio==0.11.0 \
+    && python3 -m pip install --no-cache-dir git+https://github.com/locustio/locust.git@0.12.0#egg=locustio  \
     && apk del .build-dep \
     && chmod +x /docker-entrypoint.sh \
     && mkdir /locust
