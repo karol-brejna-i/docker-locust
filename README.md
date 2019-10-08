@@ -1,3 +1,10 @@
+published images on docker hub: 
+
+https://hub.docker.com/r/grubykarol/locust
+
+![pulls](https://img.shields.io/docker/pulls/grubykarol/locust?logo=docker&style=flat-square)
+![stars](https://img.shields.io/docker/stars/grubykarol/locust?style=flat-square)
+
 I wanted the image to:
 * use Python 3.x
 * use the latest version of Locust
