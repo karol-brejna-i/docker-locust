@@ -1,7 +1,3 @@
-published images on docker hub: 
-
-https://hub.docker.com/r/grubykarol/locust
-
 ![pulls](https://img.shields.io/docker/pulls/grubykarol/locust?logo=docker&style=flat-square)
 ![stars](https://img.shields.io/docker/stars/grubykarol/locust?style=flat-square)
 
@@ -61,6 +57,9 @@ The tag for this image will be: **grubykarol/locust:0.10.0-python3.6-alpine3.9**
 
  
 # Usage 
+
+published images on docker hub: https://hub.docker.com/r/grubykarol/locust
+
 The image does not include locust scripts during a build. It assumes, the scripts will be supplied on runtime by mounting a volume (to `/locust` path).
 
 This gives the ability to use the exact same image for different deployments. There is no need to build your image that 
