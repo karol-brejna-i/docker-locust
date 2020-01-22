@@ -7,7 +7,7 @@ services:
      - "8089:8089"
      - "5557:5557"
      - "5558:5558"
-    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
+    image: "grubykarol/locust:0.13.5-python3.8-alpine3.11"
     environment:
       ATTACKED_HOST: http://master:8089
       LOCUST_MODE: master
@@ -18,7 +18,7 @@ services:
       - ./locust-scripts:/locust
 
   slave:
-    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
+    image: "grubykarol/locust:0.13.5-python3.8-alpine3.11"
     environment:
       ATTACKED_HOST: http://master:8089
       LOCUST_MODE: slave
