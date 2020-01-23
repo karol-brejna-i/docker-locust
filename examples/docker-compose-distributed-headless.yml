@@ -8,7 +8,8 @@ services:
       ATTACKED_HOST: http://example.com
       LOCUST_MODE: master
       LOCUST_MASTER_BIND_PORT: 5557
-      TASK_DELAY: 100
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
       QUIET_MODE: "${QUIET_MODE:-false}"
       LOCUST_OPTS: "--no-web --expect-slaves 1 -c 1 -r 1 -t 10s"
     volumes:
@@ -19,10 +20,11 @@ services:
     environment:
       ATTACKED_HOST: http://example.com
       LOCUST_MODE: slave
-      LOCUST_MASTER: master
+      LOCUST_MASTER_HOST: master
       LOCUST_MASTER_BIND_PORT: 5557
       NO_PROXY: master
-      TASK_DELAY: 100
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
       QUIET_MODE: "${QUIET_MODE:-false}"
       LOCUST_OPTS: "--no-web"
     volumes:
