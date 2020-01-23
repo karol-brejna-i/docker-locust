@@ -10,7 +10,8 @@ services:
       ATTACKED_HOST: http://standalone:8089
       LOCUST_MODE: standalone
       NO_PROXY: standalone
-      TASK_DELAY: 1000
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
       QUIET_MODE: "${QUIET_MODE:-false}"
       LOCUST_OPTS: "--web-port 8089"
     volumes:
