@@ -7,25 +7,27 @@ services:
      - "8089:8089"
      - "5557:5557"
      - "5558:5558"
-    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
+    image: "grubykarol/locust:0.13.5-python3.8-alpine3.11"
     environment:
       ATTACKED_HOST: http://master:8089
       LOCUST_MODE: master
       LOCUST_MASTER_BIND_PORT: 5557
-      TASK_DELAY: 1000
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
       QUIET_MODE: "${QUIET_MODE:-false}"
     volumes:
       - ./locust-scripts:/locust
 
   slave:
-    image: "grubykarol/locust:0.12.0-python3.7-alpine3.9"
+    image: "grubykarol/locust:0.13.5-python3.8-alpine3.11"
     environment:
       ATTACKED_HOST: http://master:8089
       LOCUST_MODE: slave
-      LOCUST_MASTER: master
+      LOCUST_MASTER_HOST: master
       LOCUST_MASTER_BIND_PORT: 5557
       NO_PROXY: master
-      TASK_DELAY: 1000
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
       QUIET_MODE: "${QUIET_MODE:-false}"
     volumes:
       - ./locust-scripts:/locust

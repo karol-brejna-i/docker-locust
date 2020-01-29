@@ -1,9 +1,11 @@
 import os
 
-from locust import TaskSet, task, HttpLocust
+from locust import TaskSet, task, HttpLocust, between
 
 QUIET_MODE = True if os.getenv("QUIET_MODE", "true").lower() in ['1', 'true', 'yes'] else False
-TASK_DELAY = int(os.getenv("TASK_DELAY", "1000"))
+TASK_DELAY_FROM = int(os.getenv("TASK_DELAY", "5"))
+TASK_DELAY_TO = int(os.getenv("TASK_DELAY", "30"))
+
 
 DATA_SOURCE_PATH = "data.csv"
 
@@ -22,5 +24,5 @@ class TestBehaviour(TaskSet):
 
 class TestUser(HttpLocust):
     task_set = TestBehaviour
-    min_wait = TASK_DELAY
-    max_wait = TASK_DELAY
+    # wait between 5 and 30 seconds
+    wait_time = between(TASK_DELAY_FROM, TASK_DELAY_TO)
