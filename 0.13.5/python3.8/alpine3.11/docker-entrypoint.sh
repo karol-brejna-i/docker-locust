@@ -39,4 +39,4 @@ case $(echo "${LOCUST_MODE}" | tr '[:lower:]' '[:upper:]') in
 esac
 
 cd /locust
-locust "${LOCUST_OPTS}"
+locust ${LOCUST_OPTS}
