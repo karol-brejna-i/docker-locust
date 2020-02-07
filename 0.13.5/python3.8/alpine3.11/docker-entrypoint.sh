@@ -24,7 +24,7 @@ fi
 
 LOCUST_OPTS="-f ${LOCUST_FILE} --host=${ATTACKED_HOST} $LOCUST_OPTS"
 
-case `echo ${LOCUST_MODE} | tr 'a-z' 'A-Z'` in
+case $(echo "${LOCUST_MODE}" | tr '[:lower:]' '[:upper:]') in
 "MASTER")
     LOCUST_OPTS="--master --master-bind-port=${LOCUST_MASTER_BIND_PORT} $LOCUST_OPTS"
     ;;
