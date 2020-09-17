@@ -1,0 +1,31 @@
+version: '3'
+services:
+  master:
+    container_name: master
+    hostname: master
+    image: "grubykarol/locust:1.2.3-python3.9-alpine3.12"
+    environment:
+      ATTACKED_HOST: http://example.com
+      LOCUST_MODE: master
+      LOCUST_MASTER_BIND_PORT: 5557
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
+      QUIET_MODE: "${QUIET_MODE:-false}"
+      LOCUST_OPTS: "--headless --expect-workers 1 -u 1 -r 1 -t 10s"
+    volumes:
+      - ./locust-scripts:/locust
+
+  worker:
+    image: "grubykarol/locust:1.2.3-python3.9-alpine3.12"
+    environment:
+      ATTACKED_HOST: http://example.com
+      LOCUST_MODE: worker
+      LOCUST_MASTER_HOST: master
+      LOCUST_MASTER_BIND_PORT: 5557
+      NO_PROXY: master
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
+      QUIET_MODE: "${QUIET_MODE:-false}"
+      LOCUST_OPTS: "--headless"
+    volumes:
+      - ./locust-scripts:/locust

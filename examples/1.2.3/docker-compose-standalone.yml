@@ -1,0 +1,18 @@
+version: '3'
+services:
+  standalone:
+    image: "grubykarol/locust:1.2.3-python3.9-alpine3.12"
+    container_name: standalone
+    hostname: standalone
+    ports:
+     - "8089:8089"
+    environment:
+      ATTACKED_HOST: http://standalone:8089
+      LOCUST_MODE: standalone
+      NO_PROXY: standalone
+      TASK_DELAY_FROM: 5
+      TASK_DELAY_TO: 30
+      QUIET_MODE: "${QUIET_MODE:-false}"
+      LOCUST_OPTS: "--web-port 8089"
+    volumes:
+      - ./locust-scripts:/locust
