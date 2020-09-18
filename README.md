@@ -87,9 +87,9 @@ The image uses the following environment variables to configure its behavior:
 |----------|-------------|---------|---------|
 |LOCUST_FILE   | Sets the `--locustfile` option. | locustfile.py | |
 |ATTACKED_HOST | The URL to test. Required. | - | http://example.com |
-|LOCUST_MODE   | Set the mode to run in. Can be `standalone`, `master` or `slave`. | standalone | master |
-|LOCUST_MASTER | Locust master IP or hostname. Required for `slave` mode.| - | 127.0.0.1 |
-|LOCUST_MASTER_BIND_PORT | Locust master port for communication with slaves. Used in distributed mode.<br>For master: which port master should bind to.<br>For slave: port to connect on master. | 5557 | 6666 |
+|LOCUST_MODE   | Set the mode to run in. Can be `standalone`, `master` or `worker`. | standalone | master |
+|LOCUST_MASTER | Locust master IP or hostname. Required for `worker` mode.| - | 127.0.0.1 |
+|LOCUST_MASTER_BIND_PORT | Locust master port for communication with workers. Used in distributed mode.<br>For master: which port master should bind to.<br>For worker: port to connect on master. | 5557 | 6666 |
 |LOCUST_OPTS| Additional locust CLI options. | - | "-c 10 -r 10" |
 
 
@@ -104,7 +104,7 @@ or, with additional runtime options (in this example, for running without the UI
 docker run --rm --name standalone --hostname standalone -e ATTACKED_HOST=http://example.com -e "LOCUST_OPTS=--no-web" -d -v $MY_SCRIPTS:/locust grubykarol/locust
 ```
 
-### Master-slave
+### Master-worker
 
 Run master:
 ```
@@ -116,22 +116,22 @@ docker run --name master --hostname master \
  --rm -d grubykarol/locust
 ```
 
-and some slaves:
+and some workers:
 
 ```
-docker run --name slave0 \
+docker run --name worker0 \
  --link master --env NO_PROXY=master \
  -v $MY_SCRIPTS:/locust \
  -e ATTACKED_HOST=http://master:8089 \
- -e LOCUST_MODE=slave \
+ -e LOCUST_MODE=worker \
  -e LOCUST_MASTER=master \
  --rm -d grubykarol/locust
 
-docker run --name slave1 \
+docker run --name worker1 \
  --link master --env NO_PROXY=master \
  -v $MY_SCRIPTS:/locust \
  -e ATTACKED_HOST=http://master:8089 \
- -e LOCUST_MODE=slave \
+ -e LOCUST_MODE=worker \
  -e LOCUST_MASTER=master \
  --rm -d grubykarol/locust
 ```
@@ -158,13 +158,13 @@ docker run --name master --hostname master `
  --rm -d grubykarol/locust
 ```
 
-Run slave:
+Run worker:
 ```
-docker run --name slave0 `
+docker run --name worker0 `
  --link master --env NO_PROXY=master `
  -v c:\locust-scripts:/locust `
  -e ATTACKED_HOST=http://master:8089 `
- -e LOCUST_MODE=slave `
+ -e LOCUST_MODE=worker `
  -e LOCUST_MASTER=master `
  --rm -d grubykarol/locust
 ```
