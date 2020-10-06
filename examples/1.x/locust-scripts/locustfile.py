@@ -7,9 +7,6 @@ TASK_DELAY_FROM = int(os.getenv("TASK_DELAY", "5"))
 TASK_DELAY_TO = int(os.getenv("TASK_DELAY", "30"))
 
 
-DATA_SOURCE_PATH = "data.csv"
-
-
 def log(message):
     if not QUIET_MODE:
         print(message)

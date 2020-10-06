@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 function join { local IFS="$1"; shift; echo "$*"; }
 
 # Accepts array of path elements.
@@ -17,7 +16,6 @@ function build_image() {
     tag=$(compute_tag $*)
     docker build -t ${tag} $path
 }
-
 
 function process() {
     for image_version in `find -maxdepth 3 -type d -not -path "./\.*" -not -path "\."`; do
@@ -48,6 +46,7 @@ function usage() {
     echo "locust-version example values are:"
     echo "  0.8.1 - use 0.8.1 version (directory)"
     echo "  0.9   - use versions 0.9.x (all directories with names starting with '0.9'"
+    echo "  1.    - use versions 1.x.x (all directories with names starting with '1.'"
     echo "  (no value) - use all there is"
     echo
 }
