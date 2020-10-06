@@ -12,7 +12,7 @@ Most of the images found on docker hub was old (1-2 yo) so I decided to give it 
 
 This one is based on python image for alpine, installs `locustio` package and required dependencies.
 It weighs about 130MB.
- 
+
 # Repository structure and images tagging
 The git project is organized so it can maintain many versions of the image.
 Tagging "system" was chosen to easily distinguish between the versions.
@@ -25,17 +25,17 @@ Folder structure looks like this:
    .
    |-- locust version a
    |   |--- python version x
-   |   |    |--  OS version 1 
-   |   |    `--  OS version 2 
+   |   |    |--  OS version 1
+   |   |    `--  OS version 2
    |   `--- python version y
-   |        |---  OS version 1 
-   |        `---  OS version 2 
+   |        |---  OS version 1
+   |        `---  OS version 2
    |-- locust version b
    ...
 ```
 
 Where:
-* `locust version` is a specific version of locust (i.e. 0.9.0)
+* `locust version` is a specific version of locust (i.e. 0.10.0)
 * `python version` is a specific version of python (i.e. 3.6)
 * `OS version 1` is a specific version of the operating system (i.e. alpine3.9)
 
@@ -55,15 +55,15 @@ For example, for locust 0.10.0 that runs on Python 3.6 on Alpine 3.9 the dockerf
 ```
 The tag for this image will be: **grubykarol/locust:0.10.0-python3.6-alpine3.9**.
 
- 
-# Usage 
+
+# Usage
 
 published images on docker hub: https://hub.docker.com/r/grubykarol/locust
 
 The image does not include locust scripts during a build. It assumes, the scripts will be supplied on runtime by mounting a volume (to `/locust` path).
 
-This gives the ability to use the exact same image for different deployments. There is no need to build your image that 
-would inherit from this one and only include test scripts (although it's also possible). 
+This gives the ability to use the exact same image for different deployments. There is no need to build your image that
+would inherit from this one and only include test scripts (although it's also possible).
 
 ## Pulling the image
 Pull the latest stable version:
@@ -75,9 +75,8 @@ docker pull grubykarol/locust
 Or choose locust, python and OS (Operating System) version you want and pull and the image that is tagged accordingly (see: [Tagging structure](#tagging-structure)):
 
 ```
-docker pull grubykarol/locust:0.10.0-python3.6-alpine3.9 
+docker pull grubykarol/locust:1.2.3-python3.9-alpine3.12
 ```
-
 
 
 ## Running the image
@@ -170,17 +169,17 @@ docker run --name worker0 `
 ```
 
 ## Examples
-Other simple examples are collected in [examples](./examples) directory. They include some docker-compose files to run locust standalone and distributed.
+Other simple examples are collected in [examples](./examples) directory. They include some docker-compose files to run locust standalone or distributed.
 See the folder for details.
 
 # Building the image
 Choose Locust, Python and OS (Operating System) version you want by going into desired directory (see: [Repository structure](#repository-structure))
 ```
-docker build -t grubykarol/locust:0.10.0-python3.6-alpine3.9 .
+docker build -t grubykarol/locust:1.2.3-python3.9-alpine3.12 .
 ```
 or, if behind a proxy (and the proxies are defined in HTTP(S)_PROXY variables:
 ```
-docker build --build-arg HTTP_PROXY=$http_proxy --build-arg HTTPS_PROXY=$https_proxy -t grubykarol/locust:0.10.0-python3.6-alpine3.9 . 
+docker build --build-arg HTTP_PROXY=$http_proxy --build-arg HTTPS_PROXY=$https_proxy -t grubykarol/locust:1.2.3-python3.9-alpine3.12 .
 ```
 
 There is also a simple and messy bash script -- [build-all.sh](build-all.sh) -- for development purposes. It's able to build all the images or images for selected locust version.
